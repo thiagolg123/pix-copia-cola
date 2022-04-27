@@ -5,8 +5,6 @@ import br.com.bondevendas.pixcopypaste.service.GeneratorCRC16
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 
-@Component
-@Qualifier("GeneratorCRC16Impl")
 class GeneratorCRC16Impl : GeneratorCRC16 {
 
     override fun generate(payload: String): String {
