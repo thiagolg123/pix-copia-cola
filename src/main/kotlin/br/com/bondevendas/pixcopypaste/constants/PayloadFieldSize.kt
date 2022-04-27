@@ -2,7 +2,6 @@ package br.com.bondevendas.pixcopypaste.constants
 
 object PayloadFieldSize {
     const val Payload_Format_Indicator = "02"
-    const val Merchant_Account_Information = "58"
     const val Merchant_Account_Information_GUI = "14"
     const val Merchant_Account_Information_Chave = "36"
     const val Merchant_Category_Code = "04"

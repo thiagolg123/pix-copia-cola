@@ -1,13 +1,10 @@
 package br.com.bondevendas.pixcopypaste.dto
 
 import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode.ID_MERCHANT_ACCOUNT_INFORMATION
+import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode.ID_MERCHANT_ACCOUNT_INFORMATION_DESCRIPTION
 import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode.ID_MERCHANT_ACCOUNT_INFORMATION_GUI
 import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode.ID_MERCHANT_ACCOUNT_INFORMATION_KEY
 import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode.ID_PAYLOAD_FORMAT_INDICATOR
-import br.com.bondevendas.pixcopypaste.constants.PayloadFieldSize.Merchant_Account_Information
-import br.com.bondevendas.pixcopypaste.constants.PayloadFieldSize.Merchant_Account_Information_Chave
-import br.com.bondevendas.pixcopypaste.constants.PayloadFieldSize.Merchant_Account_Information_GUI
-import br.com.bondevendas.pixcopypaste.constants.PayloadFieldSize.Payload_Format_Indicator
 
 //constructor
 class Payload(
@@ -27,21 +24,33 @@ class Payload(
      *   https://www.bcb.gov.br/content/estabilidadefinanceira/pix/Regulamento_Pix/II_ManualdePadroesparaIniciacaodoPix.pdf pag 14
      */
 
-    fun constructPayload(): String {
-        val formactedPayload = StringBuilder()
-        formactedPayload
-            .append(ID_PAYLOAD_FORMAT_INDICATOR)
-                .append(Payload_Format_Indicator)
-                .append(FIX_VALUE_FORMAT_INDICATOR)
+    private fun constructPayload(id: String, valueString: String): String {
+        val valueLength = valueString.length.toString()
+        val valueLengthWithPad = valueLength.padStart(2, '0')
 
-            .append(ID_MERCHANT_ACCOUNT_INFORMATION)
-                .append(Merchant_Account_Information)
-                    .append(ID_MERCHANT_ACCOUNT_INFORMATION_GUI)
-                        .append(Merchant_Account_Information_GUI)
-                            .append(FIX_VALUE_ACCOUNT_GUI)
-                    .append(ID_MERCHANT_ACCOUNT_INFORMATION_KEY)
-                        .append(Merchant_Account_Information_Chave)
-                            .append(pixKey)
-        return formactedPayload.toString()
+        return id.plus(valueLengthWithPad).plus(valueString)
     }
+
+    fun getPayload () : String{
+        var payload = StringBuilder()
+        payload.append(constructPayload(ID_PAYLOAD_FORMAT_INDICATOR, FIX_VALUE_FORMAT_INDICATOR))
+        payload.append(constructMerchantAccountInformation())
+
+
+        return payload.toString()
+    }
+
+
+    private fun constructMerchantAccountInformation(): String{
+        val dominioBC = constructPayload(ID_MERCHANT_ACCOUNT_INFORMATION_GUI, FIX_VALUE_ACCOUNT_GUI)
+        val pixKey = constructPayload(ID_MERCHANT_ACCOUNT_INFORMATION_KEY, this.pixKey)
+        val description =
+            when(this.description.isBlank()) {
+                true  -> ""
+                false -> constructPayload(ID_MERCHANT_ACCOUNT_INFORMATION_DESCRIPTION, this.description)
+            }
+
+        return constructPayload(ID_MERCHANT_ACCOUNT_INFORMATION, dominioBC.plus(pixKey).plus(description))
+    }
+
 }
