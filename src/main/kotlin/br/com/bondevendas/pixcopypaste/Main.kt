@@ -2,10 +2,6 @@ package br.com.bondevendas.pixcopypaste.service
 
 import br.com.bondevendas.pixcopypaste.dto.Payload
 import br.com.bondevendas.pixcopypaste.service.impl.GeneratorCRC16Impl
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.core.ResolvableType
-import java.util.*
 
 fun main(args: Array<String>) {
     var generatorCRC16 =  GeneratorCRC16Impl()
@@ -15,7 +11,7 @@ fun main(args: Array<String>) {
 
     //PARA TESTAR CONFIGURE ESSES DADOS PARA O PIX RECEBEDOR:
     val payload =
-        Payload("35873454817", "Bondezan viado", "Bonde Rosa", "Santandre", "10.50", "5649d5fs")
+        Payload("35873454817", "Thiago s2 bombom", "Bonde Rosa", "Santandre", "10.50", "5649d5fs")
 
     // DEMO DOS DADOS:
     println("DADOS: valor: ${payload.amount}, pixKey: ${payload.pixKey}, txId: ${payload.txId} ")
