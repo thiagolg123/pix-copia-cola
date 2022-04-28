@@ -2,8 +2,6 @@ package br.com.bondevendas.pixcopypaste.service.impl
 
 import br.com.bondevendas.pixcopypaste.constants.IDPixPayloadQrCode
 import br.com.bondevendas.pixcopypaste.service.GeneratorCRC16
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.stereotype.Component
 
 class GeneratorCRC16Impl : GeneratorCRC16 {
 
