@@ -13,6 +13,7 @@ object IDPixPayloadQrCode {
     const val ID_MERCHANT_NAME = "59"
     const val ID_MERCHANT_CITY = "60"
     const val ID_ADDITIONAL_DATA_FIELD_TEMPLATE = "62"
+    const val ID_CRC_16 = "63"
     const val ID_ADDITIONAL_DATA_FIELD_TEMPLATE_TXID = "05"
     const val ID_CRC16 = "6304"
 
